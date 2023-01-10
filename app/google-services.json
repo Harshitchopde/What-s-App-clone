@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "260583398765",
+    "firebase_url": "https://signupsignin-2e758-default-rtdb.firebaseio.com",
+    "project_id": "signupsignin-2e758",
+    "storage_bucket": "signupsignin-2e758.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:260583398765:android:4a0ad56d0c645ad4fd8e64",
+        "android_client_info": {
+          "package_name": "com.example.signupsignin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "260583398765-377bkmgp6h3rb4132uc2ekikem7hqm6r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkjx9nuzp_lGV9JVpK9YEXESOlFdnEe2c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "260583398765-377bkmgp6h3rb4132uc2ekikem7hqm6r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

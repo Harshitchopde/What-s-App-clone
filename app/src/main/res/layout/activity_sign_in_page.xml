@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".LoginActivity.SignInPage">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign In"
+
+            android:textSize="40dp"
+            android:textColor="@color/white"
+            android:id="@+id/signupName"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="100dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Here"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#FFBF00"
+            android:layout_marginTop="10dp"
+            android:textSize="20dp"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Enter Your Email"
+            android:textColorHint="@color/white"
+            android:backgroundTint="#708090"
+            android:textColor="@color/white"
+            android:inputType="textPersonName"
+            android:id="@+id/UserEmail"
+
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:paddingRight="100dp"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Enter Your Password"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:backgroundTint="#708090"
+            android:inputType="textPersonName"
+            android:id="@+id/UserPassword"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="100dp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="login in"
+            android:id="@+id/loginbtn"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Account ? Sign up Here "
+            android:textColor="#FFBf00"
+            android:id="@+id/clickGoForNewHere"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            />
+
+
+
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileUpdate">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:id="@+id/card_view_profile"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintVertical_bias="0.3"
+        app:cardCornerRadius="90dp"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+          android:id="@+id/photo_User"
+            android:src="@drawable/download" />
+    </androidx.cardview.widget.CardView>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/upload_pic"
+        android:text="Upload Photo"
+        app:layout_constraintTop_toBottomOf="@+id/card_view_profile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/circle_profile_img"
+        android:layout_marginTop="70dp"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/logOut"
+        android:background="@drawable/circle_profile_img"
+        android:text="Log out"
+        app:layout_constraintStart_toStartOf="@+id/upload_pic"
+        app:layout_constraintTop_toBottomOf="@+id/upload_pic"
+        app:layout_constraintEnd_toEndOf="@+id/upload_pic"
+        android:layout_marginTop="2dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
