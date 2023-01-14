@@ -34,10 +34,6 @@ import java.util.Map;
 public
 class MainActivity extends AppCompatActivity {
 
-//    FirebaseAuth mAuth;
-//    ConstraintLayout cn;
-//    FirebaseUser user;
-//    FirebaseFirestore db;
     ViewPager viewPager;
 
 
