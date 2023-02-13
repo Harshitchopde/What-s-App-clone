@@ -7,14 +7,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.signupsignin.Adapters.MessageAdapter;
 import com.example.signupsignin.Model.Message;
 import com.example.signupsignin.Model.Users;
@@ -36,6 +40,8 @@ class ChatsActivityDetails extends AppCompatActivity {
     FirebaseAuth mAuth;
     private String chat_RoomID;
     EditText  edit_txt_button;
+    TextView name;
+    ImageView backbtn ,usersinglpic,callbtn,videocalbtn;
     FloatingActionButton sendButton;
     RecyclerView recyclerView;
     ArrayList<Message> messages;
@@ -49,7 +55,34 @@ class ChatsActivityDetails extends AppCompatActivity {
     void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_detail);
+        backbtn = findViewById(R.id.backBTN);
+        usersinglpic = findViewById(R.id.userSinglePic);
+        callbtn=findViewById(R.id.callbtn);
+        videocalbtn =findViewById(R.id.videocallbtn);
+        name =findViewById(R.id.UserNamesingle);
         getRoomMateDetail();
+        callbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public
+            void onClick(View v) {
+                Toast.makeText(ChatsActivityDetails.this, "clicked Not avalilable", Toast.LENGTH_SHORT).show();
+            }
+        });
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public
+            void onClick(View v) {
+                startActivity(new Intent(ChatsActivityDetails.this,MainActivity.class));
+            }
+        });
+        videocalbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public
+            void onClick(View v) {
+                callbtn.performClick();
+            }
+        });
+
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public
@@ -61,6 +94,9 @@ class ChatsActivityDetails extends AppCompatActivity {
 
 
     }
+
+
+
 
     private
     void onSendButtonClick(String chat_room_ID) {
@@ -163,6 +199,8 @@ class ChatsActivityDetails extends AppCompatActivity {
         chat_mate_pic = intent.getStringExtra("chat_mate_pic");
         sendButton = findViewById(R.id.sendButtonMSG);
         edit_txt_button = findViewById(R.id.edit_text_message);
+        Glide.with(getApplicationContext()).load(chat_mate_pic).error(R.drawable.pic_demo).placeholder(R.drawable.download).into(usersinglpic);
+        name.setText(chat_mate_name);
         mp =MediaPlayer.create(this, Settings.System.DEFAULT_NOTIFICATION_URI);
 
         messages = new ArrayList<>();

@@ -35,57 +35,69 @@
                 app:layout_constraintVertical_bias="0.476"
                 app:srcCompat="@drawable/arrow" />
 
-<!--                        <de.hdodenhof.circleimageview.CircleImageView-->
-<!--                            android:id="@+id/profile_image"-->
-<!--                            android:layout_width="60dp"-->
-<!--                            android:layout_height="56dp"-->
-<!--                            android:src="@drawable/download"-->
-<!--                            app:civ_border_color="#FF000000"-->
-<!--                            app:civ_border_width="2dp"-->
-<!--                            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                            app:layout_constraintEnd_toEndOf="parent"-->
-<!--                            app:layout_constraintHorizontal_bias="0.0"-->
-<!--                            app:layout_constraintStart_toEndOf="@+id/imageView"-->
-<!--                            app:layout_constraintTop_toTopOf="parent"-->
-<!--                            app:layout_constraintVertical_bias="1.0" />-->
+            <!--                        <de.hdodenhof.circleimageview.CircleImageView-->
+            <!--                            android:id="@+id/profile_image"-->
+            <!--                            android:layout_width="60dp"-->
+            <!--                            android:layout_height="56dp"-->
+            <!--                            android:src="@drawable/download"-->
+            <!--                            app:civ_border_color="#FF000000"-->
+            <!--                            app:civ_border_width="2dp"-->
+            <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                            app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                            app:layout_constraintHorizontal_bias="0.0"-->
+            <!--                            app:layout_constraintStart_toEndOf="@+id/imageView"-->
+            <!--                            app:layout_constraintTop_toTopOf="parent"-->
+            <!--                            app:layout_constraintVertical_bias="1.0" />-->
+
+            <ImageView
+                android:id="@+id/userSinglePic"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/small_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/backBTN"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0"
+                app:srcCompat="@drawable/download" />
 
             <TextView
-                android:id="@+id/UserName"
+                android:id="@+id/UserNamesingle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:text="TextView"
                 android:layout_marginLeft="10dp"
+                android:text="TextView"
                 android:textSize="18dp"
                 android:textStyle="bold"
                 app:drawableTint="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imageView2"
 
                 app:layout_constraintHorizontal_bias="0.077"
-                app:layout_constraintStart_toEndOf="@+id/backBTN"
+                app:layout_constraintStart_toEndOf="@+id/userSinglePic"
+
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/callbtn"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_marginStart="116dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/UserName"
+                app:layout_constraintStart_toEndOf="@+id/UserNamesingle"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="1.0"
                 app:srcCompat="@drawable/call" />
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/videocallbtn"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginLeft="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.258"
-                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:layout_constraintStart_toEndOf="@+id/callbtn"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/video" />
 
@@ -98,7 +110,7 @@
 
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/imageView3"
+                app:layout_constraintStart_toEndOf="@+id/videocallbtn"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/dots" />
 
