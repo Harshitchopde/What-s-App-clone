@@ -210,6 +210,7 @@ class ChatsActivityDetails extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerView.setAdapter(messageAdapter);
 //
+        Log.e(TAG, "getRoomMateDetail: "+"solve or not" );
         firebaseGetCurrentUserDetail();
 
     }
