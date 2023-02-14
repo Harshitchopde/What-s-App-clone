@@ -40,7 +40,8 @@ class ChatsActivityDetails extends AppCompatActivity {
     FirebaseAuth mAuth;
     private String chat_RoomID;
     EditText  edit_txt_button;
-    TextView name;
+    TextView name,sirnamr;
+
     ImageView backbtn ,usersinglpic,callbtn,videocalbtn;
     FloatingActionButton sendButton;
     RecyclerView recyclerView;
