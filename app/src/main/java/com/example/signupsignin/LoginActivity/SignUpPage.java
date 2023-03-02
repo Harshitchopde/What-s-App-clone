@@ -27,7 +27,6 @@ public
 class SignUpPage extends AppCompatActivity {
     FirebaseAuth mAuth;
     Button registerBtn;
-//    private static final String TAG = "SignInPage";
     EditText rNameU,rEmailU,rPasswordU;
     TextView GotoLogin;
     FirebaseUser firebaseUser;
@@ -93,7 +92,6 @@ class SignUpPage extends AppCompatActivity {
                         }
                         else{
                             Toast.makeText(SignUpPage.this, "error"+task.getException(), Toast.LENGTH_SHORT).show();
-//                            Log.e(TAG, "onComplete: Register fail due to :"+task.getException().toString().trim() );
                         }
                     }
                 });

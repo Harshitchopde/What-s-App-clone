@@ -81,10 +81,8 @@ class ProfileUpdate extends AppCompatActivity {
                                     updateTheUserProfile(task.getResult().toString());
                                 }
                             });
-//                            Toast.makeText(ProfileUpdate.this, "uploaded", Toast.LENGTH_SHORT).show();
                         }
                         else {
-//                            Log.d("UPload", "onComplete: uploaded"+task.getResult().toString());
 
                         }
                         progressDialog.dismiss();

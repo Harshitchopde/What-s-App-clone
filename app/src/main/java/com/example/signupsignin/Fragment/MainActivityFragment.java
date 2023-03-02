@@ -1,5 +1,7 @@
 package com.example.signupsignin.Fragment;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.signupsignin.Adapters.RecycleAdapter;
+import com.example.signupsignin.CurrentUserDetail;
 import com.example.signupsignin.Model.Users;
 import com.example.signupsignin.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,11 +38,10 @@ class MainActivityFragment extends Fragment {
         // Required empty public constructor
     }
 
-
-
     FirebaseDatabase database;
     ArrayList<Users> arrayList = new ArrayList<>();
     RecyclerView recyclerView;
+    FirebaseAuth mauth;
 
 
 
@@ -49,6 +51,7 @@ class MainActivityFragment extends Fragment {
                       Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_activity, container, false);
 
+    mauth =FirebaseAuth.getInstance();
 
 
         RecycleAdapter recycleAdapter = new RecycleAdapter(getContext(), arrayList);
@@ -70,9 +73,9 @@ class MainActivityFragment extends Fragment {
                 arrayList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Users users = dataSnapshot.getValue(Users.class);
-//                    users.getUserEmail(dataSnapshot.getKey());
-//                    Log.e(TAG, "onDataChange: "+users.getUserEmail()+" "+uemail );
-//                    Log.e("w", "onDataChange: "+users.getUserEmail()+" "+users.getUsername());
+                    if(users.getUserEmail().equals(mauth.getCurrentUser().getEmail())){
+                        continue;
+                    }
 
                     arrayList.add(users);
                 }
@@ -92,9 +95,27 @@ class MainActivityFragment extends Fragment {
         return view;
     }
 
-
-    public
-    void intentActivity() {
-
-    }
+//    public
+//    void firebaseGetCurrentUserDetail() {
+//        mAuth = FirebaseAuth.getInstance();
+//        firebaseDatabase = FirebaseDatabase.getInstance();
+//        firebaseDatabase.getReference("user/" + mAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public
+//            void onDataChange(@NonNull DataSnapshot snapshot) {
+//                Users users = snapshot.getValue(Users.class);
+//                user_name = users.getUsername();
+//                user_email = users.getUserEmail();
+//                user_pic = users.getProfilePic();
+//                Log.e(TAG, "onDataChange: " +user_pic);
+//
+//            }
+//
+//            @Override
+//            public
+//            void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//    }
 }
