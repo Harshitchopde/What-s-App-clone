@@ -66,6 +66,7 @@ String current_user_email;
                     intent.putExtra("chat_mate_name",user.getUsername());
                     intent.putExtra("chat_mate_email",user.getUserEmail());
                     intent.putExtra("chat_mate_pic",user.getProfilePic());
+                    intent.putExtra("chat_mate_token",user.getToken());
                     Toast.makeText(context, "hiii", Toast.LENGTH_SHORT).show();
                     context.startActivity(intent);
                 }

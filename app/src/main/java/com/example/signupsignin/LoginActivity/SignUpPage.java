@@ -22,6 +22,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public
 class SignUpPage extends AppCompatActivity {
@@ -30,6 +31,7 @@ class SignUpPage extends AppCompatActivity {
     EditText rNameU,rEmailU,rPasswordU;
     TextView GotoLogin;
     FirebaseUser firebaseUser;
+    String token="";
     FirebaseDatabase database;
 
     @Override
@@ -82,12 +84,8 @@ class SignUpPage extends AppCompatActivity {
                     public
                     void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
-                            Users users = new Users(Name,Email,"");
-                            String id = mAuth.getCurrentUser().getUid();
-                            database.getReference().child("user/"+id).setValue(users);
-                            Intent intent =new Intent(getApplicationContext(),MainActivity.class);
-                            Toast.makeText(SignUpPage.this, "SuccessFully User is created ", Toast.LENGTH_SHORT).show();
-                            startActivity(intent);
+                            getNewUserToken(Name,Email);
+
 
                         }
                         else{
@@ -99,5 +97,22 @@ class SignUpPage extends AppCompatActivity {
         });
 
 
+    }
+
+    private
+    void getNewUserToken(String name, String email) {
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public
+            void onComplete(@NonNull Task<String> task) {
+                token = task.getResult();
+                Users users = new Users(name,email,"",token);
+                String id = mAuth.getCurrentUser().getUid();
+                database.getReference().child("user/"+id).setValue(users);
+                Intent intent =new Intent(getApplicationContext(),MainActivity.class);
+                Toast.makeText(SignUpPage.this, "SuccessFully User is created ", Toast.LENGTH_SHORT).show();
+                startActivity(intent);
+            }
+        });
     }
 }

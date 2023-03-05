@@ -56,19 +56,19 @@
 
                     app:srcCompat="@drawable/download" />
 
-                            <TextView
-                                android:id="@+id/UserNamesingle"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                                android:maxWidth="200dp"
-                                android:minWidth="200dp"
-                                android:maxHeight="25dp"
+                <TextView
+                    android:id="@+id/UserNamesingle"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:maxWidth="200dp"
+                    android:maxHeight="25dp"
+                    android:minWidth="200dp"
 
-                                android:text="TextViewffsgddshfadskfhadskjfahdsfkjadshhadskjfafg"
-                                android:textSize="18dp"
-                                android:textStyle="bold"
-                                app:drawableTint="@color/white" />
+                    android:text="TextViewffsgddshfadskfhadskjfahdsfkjadshhadskjfafg"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    app:drawableTint="@color/white" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"

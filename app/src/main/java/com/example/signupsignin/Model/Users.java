@@ -2,15 +2,14 @@ package com.example.signupsignin.Model;
 
 public
 class Users {
-    String username,userEmail,profilePic;
-
-    public  Users(){}
+    String username,userEmail,profilePic,token;
 
     public
-    Users(String username, String userEmail, String profilePic) {
+    Users(String username, String userEmail, String profilePic, String token) {
         this.username = username;
         this.userEmail = userEmail;
         this.profilePic = profilePic;
+        this.token = token;
     }
 
     public
@@ -42,4 +41,17 @@ class Users {
     void setProfilePic(String profilePic) {
         this.profilePic = profilePic;
     }
+
+    public
+    String getToken() {
+        return token;
+    }
+
+    public
+    void setToken(String token) {
+        this.token = token;
+    }
+
+    public  Users(){}
+
 }

@@ -1,5 +1,8 @@
 package com.example.signupsignin;
 
+import static com.example.signupsignin.Constants.Constants.NOTIFICATION_URL;
+import static com.example.signupsignin.Constants.Constants.SERVER_KEY;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,6 +21,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.signupsignin.Adapters.MessageAdapter;
 import com.example.signupsignin.Model.Message;
@@ -31,24 +40,29 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public
 class ChatsActivityDetails extends AppCompatActivity {
     private final String TAG = "fhdskj";
-    String chat_mate_email, chat_mate_name, chat_mate_pic, user_name, user_email, user_pic;
+    String chat_mate_email, chat_mate_name, chat_mate_pic, chat_mate_token, user_name, user_email, user_pic;
     FirebaseAuth mAuth;
     private String chat_RoomID;
-    EditText  edit_txt_button;
-    TextView name,sirnamr;
+    EditText edit_txt_button;
+    TextView name, sirnamr;
 
-    ImageView backbtn ,usersinglpic,callbtn,videocalbtn;
+    ImageView backbtn, usersinglpic, callbtn, videocalbtn;
     FloatingActionButton sendButton;
     RecyclerView recyclerView;
     ArrayList<Message> messages;
     FirebaseDatabase firebaseDatabase;
     MessageAdapter messageAdapter;
-    MediaPlayer mp;
+
 
 
     @Override
@@ -58,9 +72,9 @@ class ChatsActivityDetails extends AppCompatActivity {
         setContentView(R.layout.activity_chat_detail);
         backbtn = findViewById(R.id.backBTN);
         usersinglpic = findViewById(R.id.userSinglePic);
-        callbtn=findViewById(R.id.callbtn);
-        videocalbtn =findViewById(R.id.videocallbtn);
-        name =findViewById(R.id.UserNamesingle);
+        callbtn = findViewById(R.id.callbtn);
+        videocalbtn = findViewById(R.id.videocallbtn);
+        name = findViewById(R.id.UserNamesingle);
         getRoomMateDetail();
         callbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +87,7 @@ class ChatsActivityDetails extends AppCompatActivity {
             @Override
             public
             void onClick(View v) {
-                startActivity(new Intent(ChatsActivityDetails.this,MainActivity.class));
+                startActivity(new Intent(ChatsActivityDetails.this, MainActivity.class));
             }
         });
         videocalbtn.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +102,7 @@ class ChatsActivityDetails extends AppCompatActivity {
             @Override
             public
             void onClick(View v) {
-                onSendButtonClick(chat_RoomID);
+                onSendButtonClick(chat_RoomID, chat_mate_token, chat_mate_name);
 
             }
         });
@@ -97,34 +111,82 @@ class ChatsActivityDetails extends AppCompatActivity {
     }
 
 
-
-
     private
-    void onSendButtonClick(String chat_room_ID) {
+    void onSendButtonClick(String chat_room_ID, String chat_mate_token, String senderName) {
         String txt_message = edit_txt_button.getText().toString();
-        if (txt_message.isEmpty()){
+        if (txt_message.isEmpty()) {
             Toast.makeText(this, "can not send empty message", Toast.LENGTH_SHORT).show();
             return;
         }
-        Message message = new Message(txt_message,mAuth.getCurrentUser().getEmail(),chat_mate_email);
+        Message message = new Message(txt_message, mAuth.getCurrentUser().getEmail(), chat_mate_email);
         FirebaseDatabase.getInstance().getReference("message/" + chat_room_ID).push().setValue(message).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public
             void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
                     messageAdapter.notifyDataSetChanged();
                     edit_txt_button.setText("");
-                    recyclerView.scrollToPosition(messages.size()-1);
 
-                }
-                else {
-                    Log.e(TAG, "onComplete: "+task.getException().getMessage() );
+                    recyclerView.scrollToPosition(messages.size() - 1);
+                    prepareforNotification(senderName, txt_message, chat_mate_token);
+
+
+                } else {
+                    Log.e(TAG, "onComplete: " + task.getException().getMessage());
                 }
             }
         });
 
 
+    }
+
+    private
+    void prepareforNotification(String titleTxt, String message, String token) {
+        JSONObject to = new JSONObject();
+        JSONObject data = new JSONObject();
+        try {
+            data.put("title", titleTxt);
+            data.put("message", message);
+            to.put("data", data);
+            to.put("to", token);
+            sendNotification(to);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+
+    }
+    private
+    void sendNotification(JSONObject to) {
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, NOTIFICATION_URL,to, response -> {
+            Log.d("notification", "sendNotification: " + response);
+        }, error -> {
+            Log.d("notification", "sendNotification: " + error);
+        }) {
+            @Override
+            public
+            Map<String, String> getHeaders() throws AuthFailureError {
+
+                Map<String, String> map = new HashMap<>();
+                map.put("Authorization", "key=" + SERVER_KEY);
+                map.put("Content-Type", "application/json");
+                return map;
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        request.setRetryPolicy(new DefaultRetryPolicy(30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.add(request);
+
+    }
 
     private
     void firebaseGetCurrentUserDetail() {
@@ -154,11 +216,10 @@ class ChatsActivityDetails extends AppCompatActivity {
 
     private
     void setUPchatRoom() {
-        if(chat_mate_name.compareTo(user_name)>0){
-            chat_RoomID = user_name+chat_mate_name;
-        }
-        else {
-        chat_RoomID = chat_mate_name + user_name;
+        if (chat_mate_name.compareTo(user_name) > 0) {
+            chat_RoomID = user_name + chat_mate_name;
+        } else {
+            chat_RoomID = chat_mate_name + user_name;
         }
         attachMessageListnear(chat_RoomID);
     }
@@ -173,11 +234,11 @@ class ChatsActivityDetails extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     messages.add(dataSnapshot.getValue(Message.class));
                 }
-                if(!messages.isEmpty()) {
+                if (!messages.isEmpty()) {
                     if (!(messages.get(messages.size() - 1).getSender().equals(mAuth.getCurrentUser().getEmail()))) {
 
 
-                        mp.start();
+
                     }
                 }
                 messageAdapter.notifyDataSetChanged();
@@ -198,11 +259,12 @@ class ChatsActivityDetails extends AppCompatActivity {
         chat_mate_email = intent.getStringExtra("chat_mate_email");
         chat_mate_name = intent.getStringExtra("chat_mate_name");
         chat_mate_pic = intent.getStringExtra("chat_mate_pic");
+        chat_mate_token = intent.getStringExtra("chat_mate_token");
         sendButton = findViewById(R.id.sendButtonMSG);
         edit_txt_button = findViewById(R.id.edit_text_message);
         Glide.with(getApplicationContext()).load(chat_mate_pic).error(R.drawable.pic_demo).placeholder(R.drawable.download).into(usersinglpic);
         name.setText(chat_mate_name);
-        mp =MediaPlayer.create(this, Settings.System.DEFAULT_NOTIFICATION_URI);
+
 
         messages = new ArrayList<>();
 
@@ -211,7 +273,7 @@ class ChatsActivityDetails extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerView.setAdapter(messageAdapter);
 //
-        Log.e(TAG, "getRoomMateDetail: "+"solve or not" );
+        Log.e(TAG, "getRoomMateDetail: " + "solve or not");
         firebaseGetCurrentUserDetail();
 
     }
