@@ -1,6 +1,8 @@
 package com.example.signupsignin;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -48,22 +50,39 @@ class MyFirebaseCloudMessaging extends FirebaseMessagingService {
             Intent intent = new Intent(this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 //            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_MUTABLE);
 
             // Build the notification
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "channel_id")
-                    .setSmallIcon(R.drawable.ic_baseline_message_24)
-                    .setContentTitle(title)
-                    .setContentText(message)
-                    .setPriority(NotificationCompat.PRIORITY_HIGH)
-                    .setContentIntent(pendingIntent)
-                    .setAutoCancel(true);
+            // for new version
+            NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-//            nm = (NotificationManager)context.getSystemService(MyFirebaseCloudMessaging.NOTIFICATION_SERVICE);
-            // Show the notification
-            mp.start();
-            notificationManager.notify(0, builder.build());
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                Notification notification =new Notification.Builder(this)
+                        .setContentText(title)
+//                            .setLargeIcon(bitmap)
+                        .setContentIntent(pendingIntent)
+                        .setSmallIcon(R.drawable.ic_baseline_message_24)
+                        .setSubText(message)
+                        .setChannelId("channel_id")
+                        .build();
+                Log.e(TAG, "onMessageReceived: newer" );
+                nm.createNotificationChannel(new NotificationChannel("channel_id","My app",NotificationManager.IMPORTANCE_HIGH));
+                nm.notify(0,notification);
+                mp.start();
+            }
+            else {
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "channel_id")
+                        .setSmallIcon(R.drawable.ic_baseline_message_24)
+                        .setContentTitle(title)
+                        .setContentText(message)
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                        .setContentIntent(pendingIntent)
+                        .setAutoCancel(true);
+                Log.e(TAG, "onMessageReceived: older" );
+                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+                mp.start();
+                notificationManager.notify(0, builder.build());
+            }
 }
 
     }
