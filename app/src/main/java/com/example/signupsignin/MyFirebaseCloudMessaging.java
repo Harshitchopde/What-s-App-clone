@@ -60,9 +60,7 @@ class MyFirebaseCloudMessaging extends FirebaseMessagingService {
                     .setAutoCancel(true);
 
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-//            nm = (NotificationManager)context.getSystemService(MyFirebaseCloudMessaging.NOTIFICATION_SERVICE);
-            // Show the notification
-            mp.start();
+        mp.start();
             notificationManager.notify(0, builder.build());
 }
 
