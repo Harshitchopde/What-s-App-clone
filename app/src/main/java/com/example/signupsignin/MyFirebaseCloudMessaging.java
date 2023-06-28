@@ -6,12 +6,14 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
@@ -32,19 +34,16 @@ class MyFirebaseCloudMessaging extends FirebaseMessagingService {
 
 
     @Override
-    public
-    void onMessageReceived(RemoteMessage remoteMessage) {
+    public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        Log.e(TAG, "onMessageReceived: 0" );
+        Log.e(TAG, "onMessageReceived: 0");
         mp = MediaPlayer.create(this, Settings.System.DEFAULT_NOTIFICATION_URI);
         // Check if the message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
-            Log.e(TAG, "onMessageReceived: ttt" );
+            Log.e(TAG, "onMessageReceived: ttt");
 
             String title = remoteMessage.getData().get("title");
             String message = remoteMessage.getData().get("message");
-//            String title = remoteMessage.getNotification().getTitle();
-//            String message = remoteMessage.getNotification().getBody();
 
             // Create an explicit intent for an Activity in your app
             Intent intent = new Intent(this, MainActivity.class);
@@ -57,7 +56,7 @@ class MyFirebaseCloudMessaging extends FirebaseMessagingService {
             NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                Notification notification =new Notification.Builder(this)
+                Notification notification = new Notification.Builder(this)
                         .setContentText(title)
 //                            .setLargeIcon(bitmap)
                         .setContentIntent(pendingIntent)
@@ -65,12 +64,11 @@ class MyFirebaseCloudMessaging extends FirebaseMessagingService {
                         .setSubText(message)
                         .setChannelId("channel_id")
                         .build();
-                Log.e(TAG, "onMessageReceived: newer" );
-                nm.createNotificationChannel(new NotificationChannel("channel_id","My app",NotificationManager.IMPORTANCE_HIGH));
-                nm.notify(0,notification);
+                Log.e(TAG, "onMessageReceived: newer");
+                nm.createNotificationChannel(new NotificationChannel("channel_id", "My app", NotificationManager.IMPORTANCE_HIGH));
+                nm.notify(0, notification);
                 mp.start();
-            }
-            else {
+            } else {
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "channel_id")
                         .setSmallIcon(R.drawable.ic_baseline_message_24)
                         .setContentTitle(title)
@@ -78,9 +76,19 @@ class MyFirebaseCloudMessaging extends FirebaseMessagingService {
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
                         .setContentIntent(pendingIntent)
                         .setAutoCancel(true);
-                Log.e(TAG, "onMessageReceived: older" );
+                Log.e(TAG, "onMessageReceived: older");
                 NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
                 mp.start();
+                if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
                 notificationManager.notify(0, builder.build());
             }
 }

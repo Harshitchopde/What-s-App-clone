@@ -65,8 +65,7 @@ class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
             constraintSet.connect(R.id.small_profile_img,ConstraintSet.RIGHT,R.id.ccll,ConstraintSet.RIGHT,0);
             constraintSet.connect(R.id.txt_cardView,ConstraintSet.RIGHT,R.id.small_profile_img,ConstraintSet.LEFT,0);
             constraintSet.applyTo(constraintLayout);
-//            Log.e("messageAd", "onBindViewHolder: 1111"+userIMG);
-//            Log.e("messageAd", "onBindViewHolder: 1111"+chats_mateIMG);
+
             Glide.with(context).load(userIMG).error(R.drawable.pic_demo).placeholder(R.drawable.download).into(holder.imageView);
 
         }

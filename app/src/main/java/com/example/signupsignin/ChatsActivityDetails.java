@@ -125,7 +125,7 @@ class ChatsActivityDetails extends AppCompatActivity {
             void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     messageAdapter.notifyDataSetChanged();
-                    edit_txt_button.setText("");
+
 
                     recyclerView.scrollToPosition(messages.size() - 1);
                     prepareforNotification(senderName, txt_message, chat_mate_token);
@@ -133,7 +133,9 @@ class ChatsActivityDetails extends AppCompatActivity {
 
                 } else {
                     Log.e(TAG, "onComplete: " + task.getException().getMessage());
+                    Toast.makeText(ChatsActivityDetails.this, "Message can not be send : "+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
+                edit_txt_button.setText("");
             }
         });
 
