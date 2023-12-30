@@ -2,7 +2,6 @@ package com.example.signupsignin.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +14,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.signupsignin.ChatsActivityDetails;
-import com.example.signupsignin.Fragment.MainActivityFragment;
-import com.example.signupsignin.MainActivity;
+import com.example.signupsignin.ChatsActivity.ChatsActivityDetails;
 import com.example.signupsignin.Model.Users;
 import com.example.signupsignin.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 

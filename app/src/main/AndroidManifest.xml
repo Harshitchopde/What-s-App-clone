@@ -2,13 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.signupsignin">
-<uses-permission android:name="android.permission.INPUT_METHOD"/>
+
+    <uses-permission android:name="android.permission.INPUT_METHOD" />
     <uses-permission
         android:name="android.permission.POST_NOTIFICATIONS"
         tools:node="remove" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -22,11 +24,14 @@
         android:supportsRtl="true"
         tools:targetApi="31">
         <activity
+            android:name=".ChatsActivity"
+            android:exported="false" />
+        <activity
             android:name=".ProfileUpdate"
             android:exported="false"
             android:theme="@style/Theme.SignUpSignIn" />
         <activity
-            android:name=".ChatsActivityDetails"
+            android:name=".ChatsActivity.ChatsActivityDetails"
             android:exported="false"
             android:theme="@style/Theme.SignUpSignInNoActionBar" />
         <activity
@@ -47,6 +52,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service
             android:name=".MyFirebaseCloudMessaging"
             android:exported="false"
@@ -56,6 +62,7 @@
                 <action android:name="com.google.android.c2dm.intent.Recieve" />
             </intent-filter>
         </service>
+
         <activity
             android:name=".MainActivity"
             android:exported="false"

@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.signupsignin.Fragment.MainActivityFragment;
+import com.example.signupsignin.Fragment.StatusFragment;
 
 public
 class FragmentPageAdapter extends FragmentPagerAdapter {
@@ -22,6 +23,8 @@ class FragmentPageAdapter extends FragmentPagerAdapter {
         switch (position) {
             case 0:
                 return new MainActivityFragment();
+            case 1:
+                return new StatusFragment();
         }
         return null;
     }
@@ -29,7 +32,7 @@ class FragmentPageAdapter extends FragmentPagerAdapter {
     @Override
     public
     int getCount() {
-        return 1;
+        return 2;
     }
 
     @Nullable
@@ -38,6 +41,9 @@ class FragmentPageAdapter extends FragmentPagerAdapter {
     CharSequence getPageTitle(int position) {
         if (position==0){
             return "CHATS";
+        }
+        else  if (position==1){
+            return "STATUS";
         }
         return "NONE";
     }

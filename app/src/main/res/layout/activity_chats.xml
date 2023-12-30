@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_above="@+id/linear"
-    tools:context=".ChatsActivity.ChatsActivityDetails">
-
+    android:background="@drawable/whatsappbg"
+    tools:context=".ChatsActivity.ChatsActivity">
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbarlayout"
         android:layout_width="match_parent"
@@ -34,19 +33,7 @@
 
                     app:srcCompat="@drawable/arrow" />
 
-                <!--                        <de.hdodenhof.circleimageview.CircleImageView-->
-                <!--                            android:id="@+id/profile_image"-->
-                <!--                            android:layout_width="60dp"-->
-                <!--                            android:layout_height="56dp"-->
-                <!--                            android:src="@drawable/download"-->
-                <!--                            app:civ_border_color="#FF000000"-->
-                <!--                            app:civ_border_width="2dp"-->
-                <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
-                <!--                            app:layout_constraintEnd_toEndOf="parent"-->
-                <!--                            app:layout_constraintHorizontal_bias="0.0"-->
-                <!--                            app:layout_constraintStart_toEndOf="@+id/imageView"-->
-                <!--                            app:layout_constraintTop_toTopOf="parent"-->
-                <!--                            app:layout_constraintVertical_bias="1.0" />-->
+
 
                 <ImageView
                     android:id="@+id/userSinglePic"
@@ -63,6 +50,7 @@
                     android:layout_marginLeft="5dp"
                     android:maxWidth="200dp"
                     android:maxHeight="25dp"
+                    android:textColor="@color/white"
                     android:minWidth="200dp"
 
                     android:text="TextViewffsgddshfadskfhadskjfahdsfkjadshhadskjfafg"
@@ -98,8 +86,8 @@
                         android:layout_height="20dp"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="10dp"
-
-                        app:srcCompat="@drawable/dots" />
+                        app:srcCompat="@drawable/dots"
+                        app:tint="@color/black" />
 
                 </RelativeLayout>
 
@@ -116,8 +104,9 @@
         android:layout_below="@+id/appbarlayout"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/whatsappbg"
+       android:layout_above="@id/sendButtonMSG"
+
+
         android:paddingTop="5dp"
         android:paddingBottom="60dp" />
 
@@ -132,6 +121,7 @@
 
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="6dp"
+        android:textColor="@color/black"
 
         android:layout_toStartOf="@+id/sendButtonMSG"
         android:background="@drawable/edit_text_shap"
@@ -144,11 +134,11 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/sendButtonMSG"
-        android:layout_width="42dp"
-        android:layout_height="42dp"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="6dp"
         android:layout_marginBottom="6dp"
         android:backgroundTint="#009637"
         android:src="@drawable/ic_baseline_send_24"

@@ -2,14 +2,11 @@ package com.example.signupsignin;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.RecyclerView;
+
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,23 +15,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.signupsignin.Adapters.FragmentPageAdapter;
-import com.example.signupsignin.Adapters.RecycleAdapter;
-import com.example.signupsignin.LoginActivity.SignInPage;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public
 class MainActivity extends AppCompatActivity {
 
     ViewPager viewPager;
+    FragmentPageAdapter fragmentPageAdapter;
 
 
     @Override
@@ -43,7 +30,8 @@ class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         viewPager = findViewById(R.id.viewpager);
-        viewPager.setAdapter(new FragmentPageAdapter(getSupportFragmentManager()));
+         fragmentPageAdapter = new FragmentPageAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(fragmentPageAdapter);
 
     }
 

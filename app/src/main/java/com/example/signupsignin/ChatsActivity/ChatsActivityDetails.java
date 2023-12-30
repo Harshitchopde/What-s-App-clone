@@ -1,4 +1,4 @@
-package com.example.signupsignin;
+package com.example.signupsignin.ChatsActivity;
 
 import static com.example.signupsignin.Constants.Constants.NOTIFICATION_URL;
 import static com.example.signupsignin.Constants.Constants.SERVER_KEY;
@@ -9,13 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,8 +25,10 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.signupsignin.Adapters.MessageAdapter;
+import com.example.signupsignin.MainActivity;
 import com.example.signupsignin.Model.Message;
 import com.example.signupsignin.Model.Users;
+import com.example.signupsignin.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -70,33 +68,10 @@ class ChatsActivityDetails extends AppCompatActivity {
     void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_detail);
-        backbtn = findViewById(R.id.backBTN);
-        usersinglpic = findViewById(R.id.userSinglePic);
-        callbtn = findViewById(R.id.callbtn);
-        videocalbtn = findViewById(R.id.videocallbtn);
-        name = findViewById(R.id.UserNamesingle);
+        initVariable();
         getRoomMateDetail();
-        callbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public
-            void onClick(View v) {
-                Toast.makeText(ChatsActivityDetails.this, "clicked Not avalilable", Toast.LENGTH_SHORT).show();
-            }
-        });
-        backbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public
-            void onClick(View v) {
-                startActivity(new Intent(ChatsActivityDetails.this, MainActivity.class));
-            }
-        });
-        videocalbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public
-            void onClick(View v) {
-                callbtn.performClick();
-            }
-        });
+        upperTopBtnClick();
+
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +85,31 @@ class ChatsActivityDetails extends AppCompatActivity {
 
     }
 
+    private void upperTopBtnClick() {
+        callbtn.setOnClickListener(view -> {
+            Toast.makeText(ChatsActivityDetails.this, "clicked Not avalilable", Toast.LENGTH_SHORT).show();
+
+        });
+
+        backbtn.setOnClickListener(view -> {
+            startActivity(new Intent(ChatsActivityDetails.this, MainActivity.class));
+
+        });
+        videocalbtn.setOnClickListener(view -> {
+            callbtn.performClick();
+        });
+    }
+
+    private void initVariable() {
+        backbtn = findViewById(R.id.backBTN);
+        usersinglpic = findViewById(R.id.userSinglePic);
+        callbtn = findViewById(R.id.callbtn);
+        videocalbtn = findViewById(R.id.videocallbtn);
+        name = findViewById(R.id.UserNamesingle);
+        sendButton = findViewById(R.id.sendButtonMSG);
+
+    }
+
 
     private
     void onSendButtonClick(String chat_room_ID, String chat_mate_token, String senderName) {
@@ -119,6 +119,7 @@ class ChatsActivityDetails extends AppCompatActivity {
             return;
         }
         Message message = new Message(txt_message, mAuth.getCurrentUser().getEmail(), chat_mate_email);
+        edit_txt_button.setText("");
         FirebaseDatabase.getInstance().getReference("message/" + chat_room_ID).push().setValue(message).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public
@@ -135,7 +136,7 @@ class ChatsActivityDetails extends AppCompatActivity {
                     Log.e(TAG, "onComplete: " + task.getException().getMessage());
                     Toast.makeText(ChatsActivityDetails.this, "Message can not be send : "+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
-                edit_txt_button.setText("");
+
             }
         });
 
@@ -233,16 +234,11 @@ class ChatsActivityDetails extends AppCompatActivity {
             public
             void onDataChange(@NonNull DataSnapshot snapshot) {
                 messages.clear();
+
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     messages.add(dataSnapshot.getValue(Message.class));
                 }
-                if (!messages.isEmpty()) {
-                    if (!(messages.get(messages.size() - 1).getSender().equals(mAuth.getCurrentUser().getEmail()))) {
 
-
-
-                    }
-                }
                 messageAdapter.notifyDataSetChanged();
 
             }
@@ -262,7 +258,6 @@ class ChatsActivityDetails extends AppCompatActivity {
         chat_mate_name = intent.getStringExtra("chat_mate_name");
         chat_mate_pic = intent.getStringExtra("chat_mate_pic");
         chat_mate_token = intent.getStringExtra("chat_mate_token");
-        sendButton = findViewById(R.id.sendButtonMSG);
         edit_txt_button = findViewById(R.id.edit_text_message);
         Glide.with(getApplicationContext()).load(chat_mate_pic).error(R.drawable.pic_demo).placeholder(R.drawable.download).into(usersinglpic);
         name.setText(chat_mate_name);

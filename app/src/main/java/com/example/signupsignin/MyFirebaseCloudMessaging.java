@@ -17,6 +17,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.signupsignin.Utils.Utils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -29,7 +30,7 @@ import java.util.Map;
 @SuppressLint("MissingFirebaseInstanceTokenRefresh")
 public
 class MyFirebaseCloudMessaging extends FirebaseMessagingService {
-    private static final String TAG = "fgdfgsdf";
+    private static final String TAG = MyFirebaseCloudMessaging.class.getSimpleName();
     MediaPlayer mp;
 
 
@@ -38,7 +39,7 @@ class MyFirebaseCloudMessaging extends FirebaseMessagingService {
         super.onMessageReceived(remoteMessage);
         Log.e(TAG, "onMessageReceived: 0");
         mp = MediaPlayer.create(this, Settings.System.DEFAULT_NOTIFICATION_URI);
-        // Check if the message contains a data payload.
+
         if (remoteMessage.getData().size() > 0) {
             Log.e(TAG, "onMessageReceived: ttt");
 
@@ -68,6 +69,7 @@ class MyFirebaseCloudMessaging extends FirebaseMessagingService {
                 nm.createNotificationChannel(new NotificationChannel("channel_id", "My app", NotificationManager.IMPORTANCE_HIGH));
                 nm.notify(0, notification);
                 mp.start();
+                Utils.vibrate(getApplicationContext());
             } else {
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "channel_id")
                         .setSmallIcon(R.drawable.ic_baseline_message_24)
@@ -79,14 +81,10 @@ class MyFirebaseCloudMessaging extends FirebaseMessagingService {
                 Log.e(TAG, "onMessageReceived: older");
                 NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
                 mp.start();
+                Utils.vibrate(getApplicationContext());
+
                 if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
+
                     return;
                 }
                 notificationManager.notify(0, builder.build());
@@ -100,12 +98,9 @@ class MyFirebaseCloudMessaging extends FirebaseMessagingService {
     @Override
     public
     void onNewToken(@NonNull String token) {
-        Log.e(TAG, "onNewToken: token genrated" );
         updateToken(token);
 
-//        String refreshedToken = FirebaseInstanceId.getInstance().getToken();  // depreceted
         Log.d(TAG, "Refreshed token1: " + token);
-//        Log.d(TAG, "Refreshed token2: " + tokeng[0]);
         super.onNewToken(token);
     }
     private void updateToken(String token) {
